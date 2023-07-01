@@ -1,5 +1,7 @@
 [Desktop Entry]
-Comment=Run Cat display CPU usage
+Comment=Total CPU usage
+Comment[ru_RU]=Общая загрузка ЦП
+Comment[uk_UA]=Загальне використання ЦП
 Encoding=UTF-8
 Icon=animal
 Name=CatWalk
@@ -10,7 +12,7 @@ X-KDE-PluginInfo-Category=System
 X-KDE-PluginInfo-Email=dr@i-glu4it.ru
 X-KDE-PluginInfo-License=MIT
 X-KDE-PluginInfo-Name=org.kde.plasma.catwalk
-X-KDE-PluginInfo-Version=0.2
+X-KDE-PluginInfo-Version=0.3
 X-KDE-PluginInfo-Website=
 X-KDE-ServiceTypes=Plasma/Applet
 X-Plasma-API=declarativeappletscript
