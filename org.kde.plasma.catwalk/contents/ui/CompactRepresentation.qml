@@ -1,8 +1,10 @@
-import QtQuick 2.15
-import QtQuick.Layouts 1.15
-import org.kde.ksysguard.sensors 1.0 as Sensors
-import org.kde.plasma.core 2.0 as PlasmaCore
-import org.kde.plasma.components 3.0 as PlasmaComponents3
+import QtQuick
+import org.kde.ksvg as KSvg
+import QtQuick.Layouts
+import org.kde.ksysguard.sensors as Sensors
+import org.kde.kirigami as Kirigami
+import org.kde.plasma.components as PlasmaComponents3
+import org.kde.plasma.plasmoid
 
 Item {
     id: compactRepresentation
@@ -13,10 +15,10 @@ Item {
         HorizontalPanel,
         VerticalPanel,
         HorizontalDesktop,
-        VerticalDesktop
+        VerticalDesktop,
+        IconOnly
     }
     property int layoutForm
-
     Binding on layoutForm {
         delayed: true
         value: {
@@ -31,9 +33,9 @@ Item {
                     - svgItem.Layout.preferredHeight >= label.contentHeight) {
                 return CompactRepresentation.LayoutType.VerticalDesktop
             }
+            return CompactRepresentation.LayoutType.IconOnly
         }
     }
-
     GridLayout {
         id: grid
         width: {
@@ -44,6 +46,8 @@ Item {
             case CompactRepresentation.LayoutType.VerticalPanel:
             case CompactRepresentation.LayoutType.VerticalDesktop:
                 return compactRepresentation.parent.width
+            case CompactRepresentation.LayoutType.IconOnly:
+                return svgItem.Layout.preferredWidth
             }
         }
         height: {
@@ -54,6 +58,8 @@ Item {
                 return compactRepresentation.parent.height
             case CompactRepresentation.LayoutType.VerticalPanel:
                 return implicitHeight
+            case CompactRepresentation.LayoutType.IconOnly:
+                return svgItem.Layout.preferredHeight
             }
         }
         rowSpacing: 0
@@ -67,7 +73,7 @@ Item {
                 return GridLayout.LeftToRight
             }
         }
-        PlasmaCore.SvgItem {
+        KSvg.SvgItem {
             property int sourceIndex: 0
             id: svgItem
             opacity: 1
@@ -78,38 +84,31 @@ Item {
             Layout.maximumHeight: 128
             Layout.maximumWidth: 128
             visible: plasmoid.configuration.type !== 2
-            svg: PlasmaCore.Svg {
-                id: svg
-                colorGroup: PlasmaCore.ColorScope.colorGroup
-                imagePath: Qt.resolvedUrl("../icons/my-idle-symbolic.svg")
-            }
+            imagePath: Qt.resolvedUrl("../images/my-idle-symbolic.svg")
         }
         ColumnLayout {
-            id: labelLayout
-            Layout.alignment: Qt.AlignVCenter | Qt.AlignHCenter
+            visible: plasmoid.configuration.type !== 1
+            Layout.alignment: Qt.AlignVCenter
             Layout.fillWidth: layoutForm === CompactRepresentation.LayoutType.VerticalPanel
                               || layoutForm === CompactRepresentation.LayoutType.VerticalDesktop
             Layout.maximumWidth: {
                 switch (layoutForm) {
                 case CompactRepresentation.LayoutType.HorizontalPanel:
-                    return PlasmaCore.Units.gridUnit * 10
+                    return textMetrics.width
                 case CompactRepresentation.LayoutType.HorizontalDesktop:
                     return compactRepresentation.parent.width
                 default:
                     return grid.Layout.preferredWidth
                 }
             }
-            Layout.maximumHeight: textMetrics.height
-            visible: plasmoid.configuration.type !== 1
-            spacing: parent.columnSpacing
+            Layout.maximumHeight: textMetrics.height * 2
             PlasmaComponents3.Label {
                 property double fontHeightRatio: textMetrics.font.pixelSize / textMetrics.height
                 id: label
                 text: totalSensor.formattedValue
                 Layout.fillWidth: parent.Layout.fillWidth
                 Layout.maximumWidth: Layout.fillWidth ? -1 : textMetrics.width
-                Layout.minimumWidth: root.isVertical ? parent.width : textMetrics.width
-                                                       / textMetrics.height * height
+                Layout.minimumWidth: Layout.maximumWidth
                 height: parent.height * 0.71
                 // TODO
                 font.pixelSize: isVertical ? width / fontHeightRatio
@@ -121,7 +120,7 @@ Item {
 
             TextMetrics {
                 id: textMetrics
-                font.pixelSize: 64
+                font.pixelSize: 22
                 text: "100,0%"
             }
             Sensors.Sensor {
@@ -139,7 +138,7 @@ Item {
                     if (svgItem.sourceIndex == 5) {
                         svgItem.sourceIndex = 0
                     }
-                    svg.imagePath = (totalSensor.value < plasmoid.configuration.idle) ? Qt.resolvedUrl("../icons/my-idle-symbolic.svg") : Qt.resolvedUrl("../icons/my-active-" + svgItem.sourceIndex + "-symbolic.svg")
+                    svgItem.imagePath = (totalSensor.value < plasmoid.configuration.idle) ? Qt.resolvedUrl("../images/my-idle-symbolic.svg") : Qt.resolvedUrl("../images/my-active-" + svgItem.sourceIndex + "-symbolic.svg")
                     svgItem.sourceIndex += 1
                 }
             }
