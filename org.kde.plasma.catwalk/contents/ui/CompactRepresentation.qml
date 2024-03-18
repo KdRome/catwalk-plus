@@ -127,7 +127,7 @@ Item {
             Sensors.Sensor {
                 id: totalSensor
                 sensorId: "cpu/all/usage"
-                updateRateLimit: 5000
+                updateRateLimit: plasmoid.configuration.updateRateLimit
             }
             Timer {
                 id: switchTimer
