@@ -109,6 +109,7 @@ Item {
                 Layout.fillWidth: parent.Layout.fillWidth
                 Layout.maximumWidth: Layout.fillWidth ? -1 : textMetrics.width
                 Layout.minimumWidth: Layout.maximumWidth
+                fontSizeMode: Text.VerticalFit
                 height: parent.height * 0.71
                 // TODO
                 font.pixelSize: isVertical ? width / fontHeightRatio
@@ -120,12 +121,13 @@ Item {
 
             TextMetrics {
                 id: textMetrics
-                font.pixelSize: 22
+                font.pixelSize: label.height
                 text: "100,0%"
             }
             Sensors.Sensor {
                 id: totalSensor
                 sensorId: "cpu/all/usage"
+                updateRateLimit: 5000
             }
             Timer {
                 id: switchTimer
