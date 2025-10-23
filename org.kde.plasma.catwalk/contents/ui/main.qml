@@ -1,7 +1,6 @@
 import QtQuick
 import org.kde.plasma.plasmoid
-import org.kde.plasma.core 2.0 as PlasmaCore
-import org.kde.plasma.private.timer as Exec
+import org.kde.plasma.core as PlasmaCore
 
 PlasmoidItem {
     id: root
@@ -12,13 +11,16 @@ PlasmoidItem {
     Plasmoid.backgroundHints: PlasmaCore.Types.ShadowBackground
     compactRepresentation: CompactRepresentation {}
     fullRepresentation: Item {}
+
     Plasmoid.contextualActions: [
         PlasmaCore.Action {
             text: i18ndc("plasma_applet_org.kde.plasma.systemmonitor",
                          "@action", "Open System Monitor…")
             icon.name: "utilities-system-monitor"
             priority: Plasmoid.LowPriorityAction
-            onTriggered: Exec.Timer.runCommand("plasma-systemmonitor")
+            onTriggered: {
+                Qt.openUrlExternally("file:///usr/bin/plasma-systemmonitor")
+            }
         }
     ]
 }
