@@ -9,8 +9,8 @@ import org.kde.plasma.plasmoid
 Item {
     id: compactRepresentation
     Layout.minimumHeight: root.inPanel ? Layout.preferredHeight : -1
-    Layout.preferredWidth: grid.width
-    Layout.preferredHeight: grid.height
+    Layout.preferredWidth: grid.implicitWidth
+    Layout.preferredHeight: grid.implicitHeight
     enum LayoutType {
         HorizontalPanel,
         VerticalPanel,
@@ -25,12 +25,10 @@ Item {
             if (root.inPanel) {
                 return root.isVertical ? CompactRepresentation.LayoutType.VerticalPanel : CompactRepresentation.LayoutType.HorizontalPanel
             }
-            if (compactRepresentation.parent.width
-                    - svgItem.Layout.preferredWidth >= label.contentWidth) {
+            if (compactRepresentation.parent.width - svgItem.Layout.preferredWidth >= label.contentWidth) {
                 return CompactRepresentation.LayoutType.HorizontalDesktop
             }
-            if (compactRepresentation.parent.height
-                    - svgItem.Layout.preferredHeight >= label.contentHeight) {
+            if (compactRepresentation.parent.height - svgItem.Layout.preferredHeight >= label.contentHeight) {
                 return CompactRepresentation.LayoutType.VerticalDesktop
             }
             return CompactRepresentation.LayoutType.IconOnly
@@ -46,6 +44,8 @@ Item {
             case CompactRepresentation.LayoutType.VerticalPanel:
             case CompactRepresentation.LayoutType.VerticalDesktop:
                 return compactRepresentation.parent.width
+            default:
+                return implicitWidth
             }
         }
         height: {
@@ -58,6 +58,8 @@ Item {
                 return implicitHeight
             case CompactRepresentation.LayoutType.IconOnly:
                 return svgItem.Layout.preferredHeight
+            default:
+                return implicitHeight
             }
         }
         rowSpacing: 0
@@ -67,6 +69,11 @@ Item {
             case CompactRepresentation.LayoutType.VerticalPanel:
             case CompactRepresentation.LayoutType.VerticalDesktop:
                 return GridLayout.TopToBottom
+            case CompactRepresentation.LayoutType.HorizontalPanel:
+            case CompactRepresentation.LayoutType.HorizontalDesktop:
+                return GridLayout.LeftToRight
+            case CompactRepresentation.LayoutType.IconOnly:
+                return GridLayout.LeftToRight
             default:
                 return GridLayout.LeftToRight
             }
@@ -77,14 +84,14 @@ Item {
             opacity: 1
             Layout.alignment: Qt.AlignVCenter | Qt.AlignHCenter
             Layout.preferredWidth: Math.min(compactRepresentation.parent.width,
-                                            compactRepresentation.parent.height)
+                                            compactRepresentation.parent.height, 128)
             Layout.preferredHeight: Layout.preferredWidth
             Layout.maximumHeight: 128
             Layout.maximumWidth: 128
             visible: plasmoid.configuration.type !== 2
             imagePath: Qt.resolvedUrl("../images/my-idle-symbolic.svg")
         }
-            Layout.maximumHeight: textMetrics.height * 2
+            Layout.maximumHeight: 40
             PlasmaComponents3.Label {
                 property double fontHeightRatio: textMetrics.font.pixelSize / textMetrics.height
                 id: label
@@ -98,16 +105,21 @@ Item {
                     return textMetrics.width
                 case CompactRepresentation.LayoutType.HorizontalDesktop:
                     return compactRepresentation.parent.width
+                case CompactRepresentation.LayoutType.VerticalPanel:
+                    return compactRepresentation.parent.width
+                case CompactRepresentation.LayoutType.VerticalDesktop:
+                    return compactRepresentation.parent.width
+                case CompactRepresentation.LayoutType.IconOnly:
+                    return compactRepresentation.parent.width
                 default:
-                    return grid.Layout.preferredWidth
+                    return compactRepresentation.parent.width
                 }
             }
                 Layout.minimumWidth: Layout.maximumWidth
-                fontSizeMode: Text.VerticalFit
-                height: parent.height * 0.71
+                fontSizeMode: Text.Fit
+                height: grid.height * 0.8
                 // TODO
-                font.pixelSize: isVertical ? width / fontHeightRatio
-                                             * 0.3 : height * fontHeightRatio
+                font.pixelSize: isVertical ? Math.max(8, grid.height * 0.25) : Math.max(8, grid.height * 0.5)
                 horizontalAlignment: Text.AlignHCenter
                 verticalAlignment: Text.AlignVCenter
                 renderType: Text.NativeRendering
@@ -115,7 +127,7 @@ Item {
 
             TextMetrics {
                 id: textMetrics
-                font.pixelSize: label.height
+                font.pixelSize: label.font.pixelSize
                 text: "100,0%"
             }
             Sensors.Sensor {
