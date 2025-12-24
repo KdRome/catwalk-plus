@@ -1,9 +1,8 @@
-> [!NOTE]
-> This is a mirror of CatWalk plasmoid from https://store.kde.org/p/2055225/ and https://store.kde.org/p/2137844/ , aims to preserve the history and make it easy for distribution packaging.
+# CatWalk+
 
-# CatWalk
+This project is a fork of CatWalk (https://invent.kde.org/heddxh/applet-catwalk), enhanced with additional features that I found useful and believe others will appreciate as well.
 
-A simple plasmoid showing the total CPU usage. Visually made like RunCat.
+A simple plasmoid showing the total CPU, GPU, RAM usage. Visually made like RunCat.
 
 |animated preview|preview|
 |:-:|:-:|
@@ -15,7 +14,7 @@ Special thanks to [Nikita Beloglazov](https://github.com/NikitaBeloglazov) for a
 
 ### Manual installation
 
-Manual installation: unpack `org.kde.plasma.catwalk` to `~/.local/share/plasma/plasmoids`.
+Manual installation: unpack `org.kde.plasma.catwalk+` to `~/.local/share/plasma/plasmoids`.
 
 ### Build and install with CMake
 
@@ -25,3 +24,11 @@ cmake -S . -B build
 cmake --build build
 cmake --install build
 ```
+
+### What's New in CatWalk+
+
+- Choose what to monitor (CPU, GPU, or RAM) with a simple radio button.
+- Show or hide the prefix for the monitored value.
+- Tooltip displays what the number represents, even if the prefix is hidden.
+- Option to swap the arrangement of the animation and text.
+- Run multiple instances to monitor CPU, GPU, and RAM usage simultaneously, no need to open the system monitor.

@@ -5,13 +5,17 @@
             {
                 "Email": "dr@i-glu4it.ru",
                 "Name": "Yuri Saurov"
+            },
+            {
+                "Email": "petlyakr@gmail.com",
+                "Name": "Roman Petlyak"
             }
         ],
         "BugReportUrl": "",
         "Category": "System",
-        "Description": "Total CPU usage",
+        "Description": "Total CPU, GPU, RAM usage",
         "Description[ru]": "Общая загрузка ЦП",
-        "Description[uk]": "Загальне використання ЦП",
+        "Description[uk]": "Загальне використання ЦП, ГП та ОЗП",
         "EnabledByDefault": true,
         "FormFactors": [
             "tablet",
@@ -19,11 +23,11 @@
             "desktop"
         ],
         "Icon": "animal-symbolic",
-        "Id": "org.kde.plasma.catwalk",
+        "Id": "org.kde.plasma.catwalk+",
         "License": "GPL-2.0+",
-        "Name": "CatWalk",
+        "Name": "CatWalk+",
         "Website": "",
-        "Version": "2.4"
+        "Version": "2.8"
     },
     "X-Plasma-API-Minimum-Version": "6.0",
     "X-Plasma-Provides": [

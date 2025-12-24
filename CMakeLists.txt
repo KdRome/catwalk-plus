@@ -11,5 +11,5 @@ include(KDEInstallDirs)
 find_package(Plasma REQUIRED)
 find_package(KF6I18n NO_MODULE)
 
-plasma_install_package(org.kde.plasma.catwalk org.kde.plasma.catwalk)
+plasma_install_package(org.kde.plasma.catwalk+ org.kde.plasma.catwalk+)
 ki18n_install(translations)

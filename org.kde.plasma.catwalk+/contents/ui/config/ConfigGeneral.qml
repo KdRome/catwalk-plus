@@ -5,11 +5,66 @@ import org.kde.kirigami as Kirigami
 import org.kde.kcmutils as KCM
 
 KCM.SimpleKCM {
+    property int cfg_displayModeDefault: 0
+    property int cfg_idleDefault: 5
+    property bool cfg_showLabelDefault: true
+    property int cfg_typeDefault: 0
+    property int cfg_updateRateLimitDefault: 1000
+
     property alias cfg_idle: idleSlider.value
     property alias cfg_type: typeBox.currentIndex
     property alias cfg_updateRateLimit: updateRateLimitSpinBox.value
+    property alias cfg_showLabel: showLabelCheckbox.checked
+    property int cfg_displayMode
+    property alias cfg_swapOrder: swapOrderCheckbox.checked
+    property bool cfg_swapOrderDefault: false
+
     Kirigami.FormLayout {
         id: root
+        
+        // spacing in the config menu - cleaner look
+        Item { Kirigami.FormData.isSection: true }
+
+        RowLayout {
+            Kirigami.FormData.label: i18n("Show:")
+
+            Controls.RadioButton {
+                text: i18n("CPU Usage")
+                checked: cfg_displayMode === 0
+                onToggled: if (checked) cfg_displayMode = 0
+            }
+
+            Controls.RadioButton {
+                text: i18n("GPU Usage")
+                checked: cfg_displayMode === 1
+                onToggled: if (checked) cfg_displayMode = 1
+            }
+
+            Controls.RadioButton {
+                text: i18n("RAM Usage")
+                checked: cfg_displayMode === 2
+                onToggled: if (checked) cfg_displayMode = 2
+            }
+        }
+
+        Item { Kirigami.FormData.isSection: true }
+
+        Controls.CheckBox {
+            id: showLabelCheckbox
+            Kirigami.FormData.label: i18n("Prefix:")
+            text: i18n("Show prefix (CPU:, GPU:, RAM:)")
+        }
+
+        Item { Kirigami.FormData.isSection: true }
+
+        Controls.CheckBox {
+            id: swapOrderCheckbox
+            Kirigami.FormData.label: i18n("Swap Order:")
+            text: i18n("Show animation on the right")
+            checked: cfg_swapOrder
+        }
+
+        Item { Kirigami.FormData.isSection: true }
 
         RowLayout {
             Layout.fillWidth: true
@@ -33,6 +88,9 @@ KCM.SimpleKCM {
                 text: "199%"
             }
         }
+
+        Item { Kirigami.FormData.isSection: true }
+
         Controls.ComboBox {
             Layout.fillWidth: true
             Kirigami.FormData.label: i18n("Displaying items")
@@ -40,6 +98,9 @@ KCM.SimpleKCM {
             model: [i18n("Character and percentage"), i18n(
                     "Character only"), i18n("Percentage only")]
         }
+
+        Item { Kirigami.FormData.isSection: true }
+
         Controls.SpinBox {
             id: updateRateLimitSpinBox
             Layout.fillWidth: true

@@ -4,15 +4,25 @@
       xsi:schemaLocation="http://www.kde.org/standards/kcfg/1.0
       http://www.kde.org/standards/kcfg/1.0/kcfg.xsd" >
   <kcfgfile name=""/>
+
     <group name="General">
-        <entry name="idle" type="Int">
+        <entry name="displayMode" type="Int">
             <default>0</default>
+        </entry>
+        <entry name="idle" type="Int">
+            <default>5</default>
         </entry>
         <entry name="type" type="Int">
             <default>0</default>
         </entry>
         <entry name="updateRateLimit" type="Int">
-        <default>1000</default>
+            <default>1000</default>
+        </entry>
+        <entry name="showLabel" type="Bool">
+            <default>true</default>
+        </entry>
+        <entry name="swapOrder" type="Bool">
+            <default>false</default>
         </entry>
     </group>
 </kcfg>
