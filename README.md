@@ -32,3 +32,13 @@ cmake --install build
 - Tooltip displays what the number represents, even if the prefix is hidden.
 - Option to swap the arrangement of the animation and text.
 - Run multiple instances to monitor CPU, GPU, and RAM usage simultaneously, no need to open the system monitor.
+### Preview
+
+| Variation 1 | Variation 2 |
+|:-----------:|:-----------:|
+| ![Variation 1](https://github.com/user-attachments/assets/d87aaf4c-09df-42e4-b432-3fb8172af012) | ![Variation 2](https://github.com/user-attachments/assets/e65a6719-f9a9-418a-bd48-0d7458d55978) |
+
+| ToolTip | Config Menu |
+|:-------:|:-----------:|
+| ![ToolTip](https://github.com/user-attachments/assets/8ea28fa0-5fa1-4eed-8d3b-998faf005771) | ![Config Menu](https://github.com/user-attachments/assets/38774b00-2347-46aa-bda9-3454db92fed6) |
+
